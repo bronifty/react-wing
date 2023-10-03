@@ -7,6 +7,7 @@ const {
   nodeFsWriteAndReturn,
   nodeFsReadAndReturn,
   execSQLiteQuery,
+  execSQLiteQueryRead,
 } = require("./utils.cjs");
 
 const app = express();
@@ -61,10 +62,41 @@ app.post("/upload", express.json({ limit: "50mb" }), async (req, res) => {
 });
 
 app.post("/download", async (req, res) => {
-  const { fileName } = req.body;
+  // const { fileName } = req.body;
+  // console.log(`req.body ${JSON.stringify(req.body, null, 2)}`);
+
   try {
-    const file = await nodeFsReadAndReturn(fileName);
-    res.status(200).send(file);
+    // query db for fileName to get key, which is passed to nodeFsReadAndReturn(key)
+    const executeDbFunction = await execSQLiteQueryRead(req.body);
+    const returnVal = await executeDbFunction();
+    // console.log(
+    //   `back in app.post(/download); just executed 'execSQLiteQueryRead(req.body); returnVal: ${JSON.stringify(
+    //     returnVal,
+    //     null,
+    //     2
+    //   )}`
+    // );
+    // console.log(`returnVal[0]: ${JSON.stringify(returnVal[0], null, 2)}`);
+    // console.log(
+    //   `returnVal[0].key: ${JSON.stringify(returnVal[0].key, null, 2)}`
+    // );
+
+    // res.status(201).json(returnVal);
+    let file = await nodeFsReadAndReturn(returnVal[0].key);
+    // console.log(
+    //   `temp val from nodeFsReadAndReturn ${JSON.stringify(temp, null, 2)}`
+    // );
+
+    // returnVal.file = temp;
+    let payload = { ...returnVal, file };
+    console.log(`returnVal ${payload}`);
+    for (let key in payload) {
+      console.log("for let key in payload");
+
+      console.log(key, payload[key]);
+    }
+
+    res.status(200).send(payload);
   } catch (error) {
     console.log(error);
     res.status(500).send(err);

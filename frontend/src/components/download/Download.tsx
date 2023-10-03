@@ -28,7 +28,7 @@ function Download({ apiUrl }: { apiUrl: string }) {
     // };
     console.log(
       `in DownloadBase64 component sending to createImageFromBase64; jsonData: ${JSON.stringify(
-        jsonData,
+        jsonData[0],
         null,
         2
       )}`
@@ -36,7 +36,7 @@ function Download({ apiUrl }: { apiUrl: string }) {
     // createImageFromBase64(jsonData);
 
     // Remove the data URL prefix
-    const base64String = jsonData.file.replace(/^data:.+;base64,/, "");
+    const base64String = jsonData[0].file.replace(/^data:.+;base64,/, "");
 
     // Convert base64 to binary
     const binaryString = atob(base64String);
