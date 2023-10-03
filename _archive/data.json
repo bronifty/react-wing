@@ -1,0 +1,9 @@
+{
+  "productId": "test 1",
+  "customerId": "customer 1"
+}
+// {
+//   "productId": "test 1",
+//   "customerId": "customer 1",
+//   "status": "pending"
+// }
