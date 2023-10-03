@@ -1,16 +1,14 @@
-// const { Ulid } = require("id128");
 const fs = require("fs").promises;
 const path = require("path");
 const express = require("express");
 const cors = require("cors");
-// const { randomUUID } = require("crypto");
+const { randomUUID } = require("crypto");
 const {
   nodeFsWriteAndReturn,
   nodeFsReadAndReturn,
   execSQLiteQuery,
 } = require("./utils.cjs");
-const { randomUUID } = require("crypto");
-const { table } = require("console");
+
 const app = express();
 app.use(
   cors({
@@ -72,27 +70,6 @@ app.post("/download", async (req, res) => {
     res.status(500).send(err);
   } finally {
   }
-});
-
-app.post("/sql", async (req, res) => {
-  // const inputFile = { fileName: "abc", mimeType: "def" };
-  let sqliteQueryResult;
-  async function executeDb() {
-    const dbModule = await import("./db.mjs");
-    const db = dbModule.default;
-    // await db.execute({
-    //   sql: "INSERT INTO medias (key, fileName, mimeType, caption) VALUES($key, $fileName, $mimeType, $caption)",
-    //   args: {
-    //     key: `${Ulid.generate()}`,
-    //     fileName: inputFile.fileName,
-    //     mimeType: inputFile.mimeType,
-    //     caption: "yes hello this is dog",
-    //   },
-    // });
-    const sqliteQueryResult = await db.execute("SELECT * FROM medias");
-    return sqliteQueryResult;
-  }
-  executeDb().then((result) => console.log(result));
 });
 
 app.listen(3000, () => console.log("Server is running on port 3000"));
