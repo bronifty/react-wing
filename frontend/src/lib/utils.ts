@@ -42,7 +42,6 @@ export const handleFileSubmitAsJson = async (payload: any, uploadUrl: any) => {
       }),
     });
     const data = await response.json();
-    console.log(`getting a response.json ${JSON.stringify(data, null, 2)}`);
     console.log(JSON.stringify(data, null, 2));
   } catch (error) {
     console.log(error);
