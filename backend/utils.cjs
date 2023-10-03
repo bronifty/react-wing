@@ -12,14 +12,10 @@ const execSQLiteQuery = async () => {};
 const nodeFsWriteAndReturn = async (payload) => {
   console.log(`payload ${JSON.stringify(payload, null, 2)}`);
 
-  let payloadPath = path.join(
-    __dirname,
-    "../backend/data",
-    JSON.stringify(`${payload.key}`)
-  );
+  let payloadPath = path.join(__dirname, "../backend/data", payload.key);
   try {
-    await fs.writeFile(payloadPath, JSON.stringify(payload.file));
-    return key;
+    await fs.writeFile(payloadPath, payload.file);
+    return payload.key;
   } catch (error) {
     console.log(error);
   } finally {
