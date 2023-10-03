@@ -11,23 +11,19 @@ const execSQLiteQuery = async (payload) => {
   async function executeDb() {
     const dbModule = await import("./db.mjs");
     const db = dbModule.default;
+    const args = {
+      key: payload.key,
+      fileName: payload.fileName,
+      mimeType: payload.mimeType,
+      caption: payload.caption,
+    };
     await db.execute({
       sql: "INSERT INTO medias (key, fileName, mimeType, caption) VALUES($key, $fileName, $mimeType, $caption)",
-      args: {
-        key: payload.key,
-        fileName: payload.fileName,
-        mimeType: payload.mimeType,
-        caption: payload.caption,
-      },
+      args,
     });
     const sqliteQueryResult = await db.execute({
       sql: "SELECT * FROM medias WHERE key = $key",
-      args: {
-        key: payload.key,
-        fileName: payload.fileName,
-        mimeType: payload.mimeType,
-        caption: payload.caption,
-      },
+      args,
     });
     // const sqliteQueryResult = await db.execute("SELECT * FROM medias");
     return sqliteQueryResult;
