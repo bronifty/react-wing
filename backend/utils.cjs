@@ -20,7 +20,16 @@ const execSQLiteQuery = async (payload) => {
         caption: payload.caption,
       },
     });
-    const sqliteQueryResult = await db.execute("SELECT * FROM medias");
+    const sqliteQueryResult = await db.execute({
+      sql: "SELECT * FROM medias WHERE key = $key",
+      args: {
+        key: payload.key,
+        fileName: payload.fileName,
+        mimeType: payload.mimeType,
+        caption: payload.caption,
+      },
+    });
+    // const sqliteQueryResult = await db.execute("SELECT * FROM medias");
     return sqliteQueryResult;
   }
   executeDb().then((result) => console.log(result));
