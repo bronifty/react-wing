@@ -10,8 +10,6 @@ const path = require("path");
 const execSQLiteQuery = async () => {};
 
 const nodeFsWriteAndReturn = async (payload) => {
-  console.log(`payload ${JSON.stringify(payload, null, 2)}`);
-
   let payloadPath = path.join(__dirname, "../backend/data", payload.key);
   try {
     await fs.writeFile(payloadPath, payload.file);
