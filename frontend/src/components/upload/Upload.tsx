@@ -1,5 +1,5 @@
 // import React from "react";
-import { handleFileSubmitAsJson } from "../../../../lib/utils.ts";
+import { handleFileSubmitAsJson } from "../../lib/utils.ts";
 function UploadWing({ apiUrl }: any) {
   console.log(`apiUrl ${JSON.stringify(apiUrl, null, 2)}`);
 

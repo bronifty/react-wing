@@ -29,9 +29,6 @@ export const readFileAsDataURL = (file: any) => {
 
 export const handleFileSubmitAsJson = async (file: any, uploadUrl: any) => {
   try {
-    // const base64 = await readFileAsDataURL(file);
-    // console.log(`fetching to uploadUrl ${JSON.stringify(uploadUrl, null, 2)}`);
-
     const response = await fetch(uploadUrl, {
       method: "POST",
       headers: {
@@ -45,7 +42,6 @@ export const handleFileSubmitAsJson = async (file: any, uploadUrl: any) => {
     });
     const data = await response.json();
     console.log(`getting a response.json ${JSON.stringify(data, null, 2)}`);
-
     console.log(JSON.stringify(data, null, 2));
   } catch (error) {
     console.log(error);
