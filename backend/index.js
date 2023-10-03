@@ -10,6 +10,7 @@ const {
   execSQLiteQuery,
 } = require("./utils.cjs");
 const { randomUUID } = require("crypto");
+const { table } = require("console");
 const app = express();
 app.use(
   cors({
@@ -47,9 +48,12 @@ app.post("/upload", express.json({ limit: "50mb" }), async (req, res) => {
     // promise.allsettled here
     let payload = req.body;
     payload.key = randomUUID();
-    const returnVal = await nodeFsWriteAndReturn(payload);
-    await execSQLiteQuery(payload);
-
+    // bucket.put
+    await nodeFsWriteAndReturn(payload);
+    // table.write
+    const executeDbFunction = await execSQLiteQuery(payload);
+    const returnVal = await executeDbFunction();
+    console.log(`returnVal ${JSON.stringify(returnVal, null, 2)}`);
     res.status(201).json(returnVal);
   } catch (error) {
     console.log(error);

@@ -8,7 +8,7 @@ const path = require("path");
 // };
 // CREATE TABLE medias (key TEXT, fileName TEXT, mimeType TEXT, caption TEXT);
 const execSQLiteQuery = async (payload) => {
-  async function executeDb() {
+  return async function executeDb() {
     const dbModule = await import("./db.mjs");
     const db = dbModule.default;
     const args = {
@@ -25,10 +25,9 @@ const execSQLiteQuery = async (payload) => {
       sql: "SELECT * FROM medias WHERE key = $key",
       args,
     });
-    // const sqliteQueryResult = await db.execute("SELECT * FROM medias");
     return sqliteQueryResult;
-  }
-  executeDb().then((result) => console.log(result));
+  };
+  // executeDb().then((result) => console.log(result));
 };
 
 const nodeFsWriteAndReturn = async (payload) => {
