@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import Order from "./components/order/Order";
+// import Order from "./components/order/Order";
 import Upload from "./components/upload/Upload";
 import Download from "./components/download/Download";
 
@@ -32,7 +32,7 @@ function App() {
         count is {count}
       </button>
       <div>{apiUrl && JSON.stringify(apiUrl, null, 2)}</div>
-      <Order apiUrl={apiUrl} />
+      {/* <Order apiUrl={apiUrl} /> */}
       <Upload apiUrl={apiUrl} />
       <Download apiUrl={apiUrl} />
     </>

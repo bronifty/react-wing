@@ -27,7 +27,7 @@ export const readFileAsDataURL = (file: any) => {
   });
 };
 
-export const handleFileSubmitAsJson = async (file: any, uploadUrl: any) => {
+export const handleFileSubmitAsJson = async (payload: any, uploadUrl: any) => {
   try {
     const response = await fetch(uploadUrl, {
       method: "POST",
@@ -35,9 +35,10 @@ export const handleFileSubmitAsJson = async (file: any, uploadUrl: any) => {
         "content-type": "application/json",
       },
       body: JSON.stringify({
-        file: await readFileAsDataURL(file),
-        fileName: slugify(file.name),
-        mimeType: encodeURIComponent(file.type),
+        file: await readFileAsDataURL(payload.file),
+        fileName: slugify(payload.file.name),
+        mimeType: encodeURIComponent(payload.file.type),
+        caption: payload.caption,
       }),
     });
     const data = await response.json();

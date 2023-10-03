@@ -17,7 +17,7 @@ const execSQLiteQuery = async (payload) => {
         key: payload.key,
         fileName: payload.fileName,
         mimeType: payload.mimeType,
-        caption: "payload.caption",
+        caption: payload.caption,
       },
     });
     const sqliteQueryResult = await db.execute("SELECT * FROM medias");
