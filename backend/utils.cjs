@@ -1,13 +1,30 @@
 const fs = require("fs").promises;
 const path = require("path");
 // req.body = {
-//   key: Ulid.generate().toRaw(),
+//   key: randomUUID(),
 //   file: await readFileAsDataURL(file),
 //   fileName: slugify(file.name),
 //   mimeType: encodeURIComponent(file.type),
 // };
 // CREATE TABLE medias (key TEXT, fileName TEXT, mimeType TEXT, caption TEXT);
-const execSQLiteQuery = async () => {};
+const execSQLiteQuery = async (payload) => {
+  async function executeDb() {
+    const dbModule = await import("./db.mjs");
+    const db = dbModule.default;
+    await db.execute({
+      sql: "INSERT INTO medias (key, fileName, mimeType, caption) VALUES($key, $fileName, $mimeType, $caption)",
+      args: {
+        key: payload.key,
+        fileName: payload.fileName,
+        mimeType: payload.mimeType,
+        caption: "payload.caption",
+      },
+    });
+    const sqliteQueryResult = await db.execute("SELECT * FROM medias");
+    return sqliteQueryResult;
+  }
+  executeDb().then((result) => console.log(result));
+};
 
 const nodeFsWriteAndReturn = async (payload) => {
   let payloadPath = path.join(__dirname, "../backend/data", payload.key);
